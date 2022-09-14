@@ -17,7 +17,7 @@ class Draw:
 
 
 game = Game()
-draw = Draw()
+display = Draw()
 while game.run:
     game.update()
-    draw.update()
+    display.update()
