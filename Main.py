@@ -16,6 +16,19 @@ class Draw:
         pass
 
 
+# game instances
+class Player:
+    pass
+
+
+class Item:
+    pass
+
+
+class Monster:
+    pass
+
+
 game = Game()
 display = Draw()
 while game.run:
