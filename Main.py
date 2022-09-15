@@ -40,7 +40,11 @@ class Item:
 
 
 class Monster:
-    pass
+    def __init__(self, x, y, monsterBase):
+        self.coord = [x, y]
+        self.stepMethod = monsterBase.method
+        self.description = monsterBase.description
+        self.type = monsterBase.type
 
 
 game = Game()
