@@ -24,9 +24,19 @@ class Player:
         self.coord = [0, 0]
         self.inv = []
 
+    def move_player(self, x_direction, y_direction):
+        pass
+
 
 class Item:
-    pass
+    def __init__(self, x, y, itemBase):
+        self.coord = [x, y]
+        self.stepMethod = itemBase.method
+        self.description = itemBase.description
+        self.type = itemBase.type
+
+    def execute_item(self):
+        self.stepMethod()
 
 
 class Monster:
