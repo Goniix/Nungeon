@@ -20,12 +20,14 @@ class Dict:
     def __init__(self):
         pass
 
+
 # game instances
 class Player:
     def __init__(self):
-        self.baseHealth=500
-        self.Health=self.baseHealth
-        self.coord=[0,0]
+        self.baseHealth = 500
+        self.Health = self.baseHealth
+        self.coord = [0, 0]
+        self.inv = []
     pass
 
 
