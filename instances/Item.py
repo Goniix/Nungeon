@@ -6,6 +6,7 @@ class Item:
         self.description = item_base.description
         self.type = item_base.type
         self.solid = item_base.solid
+        self.name = item_base.name
 
     def collide(self):
         self.collide_method()
@@ -18,6 +19,8 @@ class ItemTemplate:
     def __init__(self):
         self.solid = False
         self.type = "X"
+        self.description = "Default description"
+        self.name = "Default name"
 
     def collide_method(self):
         """executed when player steps on it"""
