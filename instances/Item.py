@@ -7,7 +7,6 @@ class Item:
         self.type = item_base.type
         self.solid = item_base.solid
 
-
     def collide(self):
         self.collide_method()
 
@@ -27,4 +26,3 @@ class ItemTemplate:
     def step_method(self):
         """executed on each turn"""
         pass
-    
