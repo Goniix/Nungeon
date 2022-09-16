@@ -37,6 +37,6 @@ class Game:
             self.update()
 
         return 0
-
+        
 game = Game()
 game.start_game()
