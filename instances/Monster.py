@@ -11,7 +11,7 @@ class Monster:
         self.name = monster_base.name
 
         self.step_method = monster_base.step_method
-        self.attack_method = monster_base.attack_method
+        #self.attack_method = monster_base.attack_method
         self.hit_method = monster_base.hit_method
         self.death_method = monster_base.death_method
 
@@ -26,4 +26,10 @@ class MonsterTemplate:
 
     def step_method(self):
         """method executed each turn by the monster"""
+        pass
+
+    def death_method(self):
+        pass
+    
+    def hit_method(self):
         pass
