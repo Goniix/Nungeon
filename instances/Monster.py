@@ -6,7 +6,6 @@ class Monster:
         self.health = self.base_health
         self.base_speed = monster_base.baseSpeed
         self.speed = self.base_speed
-        self.speedgen = monster_base.speedgen
         self.description = monster_base.description
         self.name = monster_base.name
 
@@ -21,7 +20,6 @@ class MonsterTemplate:
         self.description = "DefaultDescription"
         self.base_health = 500
         self.base_speed = 10
-        self.speedgen = 10
         self.type = "M"
 
     def step_method(self):
