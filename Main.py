@@ -25,9 +25,6 @@ class Game:
 
         self.run = False
 
-        self.delta_time = 0.00
-        self.last_tick = 0.00
-
     
     def ask_player_name(self) -> int:
         if self.player is not None:
