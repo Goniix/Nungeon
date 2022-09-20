@@ -4,12 +4,29 @@ from instances.Item import *
 from instances.Monster import *
 from instances.Player import Player
 
+import pygame
+
+
+width = 1194
+height = 834
+
+
+pygame.init()
+pygame.display.set_caption("Nungeon")
+
+screen = pygame.display.set_mode((width, height))
+
+clock = pygame.time.Clock()
+
 class Game:
     def __init__(self):
         self.colors = Colors()
         self.player = None
 
         self.run = False
+
+        self.delta_time = 0.00
+        self.last_tick = 0.00
 
     
     def ask_player_name(self) -> int:
@@ -25,6 +42,16 @@ class Game:
 
     def update(self):
         # run updates of all instances (no draw)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit(0)
+                break
+
+        pygame.display.flip()
+
+        dt = clock.tick(144) / 144
+        print(dt)
         pass
 
 
