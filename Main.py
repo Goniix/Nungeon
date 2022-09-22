@@ -5,11 +5,11 @@ from instances.Monster import *
 from instances.Player import Player
 
 import pygame
+import sys
 
 
 width = 1194
 height = 834
-
 
 pygame.init()
 pygame.display.set_caption("Nungeon")
@@ -18,6 +18,7 @@ screen = pygame.display.set_mode((width, height))
 
 clock = pygame.time.Clock()
 
+
 class Game:
     def __init__(self):
         self.colors = Colors()
@@ -25,7 +26,6 @@ class Game:
 
         self.run = False
 
-    
     def ask_player_name(self) -> int:
         if self.player is not None:
             print("Un joueur est déjà créé.")
@@ -39,18 +39,27 @@ class Game:
 
     def update(self):
         # run updates of all instances (no draw)
+
+        x_move = 0
+        y_move = 0
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
-                break
+
+        key = pygame.key.get_pressed()
+        y_move = key[pygame.K_s] - key[pygame.K_z]
+        x_move = key[pygame.K_d] - key[pygame.K_q]
 
         pygame.display.flip()
 
-        dt = clock.tick(144) / 144
-        print(dt)
-        pass
+        keys = (x_move, y_move)
 
+        # self.player.update(keys)
+
+        dt = clock.tick(144) / 144
+        pass
 
     def start_game(self) -> int:
         self.ask_player_name()
@@ -61,6 +70,7 @@ class Game:
             self.update()
 
         return 0
-        
+
+
 game = Game()
 game.start_game()
