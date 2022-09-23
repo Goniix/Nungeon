@@ -26,6 +26,10 @@ class Game:
 
         self.run = False
 
+        self.background = pygame.image.load(os.path.join("sprites/background_tile.png"))
+        self.background.convert()
+
+
     def ask_player_name(self) -> int:
         if self.player is not None:
             print("Un joueur est déjà créé.")
@@ -60,6 +64,13 @@ class Game:
 
         dt = clock.tick(144) / 144
         pass
+
+    def draw(self) -> bool:
+        count_per_line = floor(width / 64) + 2
+        count_per_column = floor(height / 64) + 2
+
+        for i in range(count_per_line):
+
 
     def start_game(self) -> int:
         self.ask_player_name()
