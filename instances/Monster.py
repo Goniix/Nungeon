@@ -1,3 +1,4 @@
+from math import *
 class Monster:
     def __init__(self, x, y, monster_base):
         self.coord = [x, y]
@@ -21,10 +22,16 @@ class MonsterTemplate:
         self.base_health = 500
         self.base_speed = 10
         self.type = "M"
+        self.base_speed = 10
+        self.speed = self.base_speed
 
-    def step_method(self):
+    def step_method(self,player_x,player_y,tcor):
         """method executed each turn by the monster"""
-        pass
+        dist=sqrt(((player_x-self.coord[0])**2)-((player_y-self.coord[1])**2))
+        x_vec=(player_x-self.coord[0])/dist
+        y_vec=(player_y-self.coord[1])/dist
+        self.coord[0]+= x_vec*self.speed*tcor
+        self.coord[1]+= y_vec*self.speed*tcor
 
     def death_method(self):
         pass
