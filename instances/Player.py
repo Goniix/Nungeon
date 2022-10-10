@@ -6,7 +6,7 @@ class Player:
         self.base_health = 500
         self.health = self.base_health
         self.player_name = name
-        self.base_speed = 25
+        self.base_speed = 5
         self.speed = self.base_speed
         self.sprt = sprt
         self.scrn = screen
@@ -27,7 +27,7 @@ class Player:
         return self.inv
     
     def add_item_to_inv(self,itm):
-        inv.append(itm)
+        self.inv.append(itm)
     
     def move_player(self, tcor, x_direction, y_direction):
         self.coord[0]+= x_direction*self.speed*tcor
