@@ -6,6 +6,9 @@ from instances.Player import Player
 
 import pygame
 import sys
+import os
+
+from math import floor
 
 
 width = 1194
@@ -28,7 +31,9 @@ class Game:
 
         self.background = pygame.image.load(os.path.join("sprites/background_tile.png"))
         self.background.convert()
-
+        
+        self.sprites = [pygame.image.load(os.path.join("sprites/player.png")).convert()]
+        
 
     def ask_player_name(self) -> int:
         if self.player is not None:
@@ -37,7 +42,7 @@ class Game:
 
         player_name = input("Veuillez renseigner le pseudonyme du joueur : ")
         
-        self.player = Player(player_name, (0, 0))
+        self.player = Player(player_name, (0, 0), self.sprites[0])
 
         return 0
 
@@ -63,14 +68,23 @@ class Game:
         # self.player.update(keys)
 
         dt = clock.tick(144) / 144
+        
+        self.player.update(dt, [x_move, y_move])
+        self.player.draw()
+        
         pass
 
     def draw(self) -> bool:
+        screen.fill((0,0,0))
         count_per_line = floor(width / 64) + 2
         count_per_column = floor(height / 64) + 2
-
+        
+        max_decal_x = floor(self.player.coord[0] % 64)
+        max_decal_y = floor(self.player.coord[1] % 64)
+                
         for i in range(count_per_line):
-
+            for j in range(count_per_column):
+                screen.blit(self.background, [(i*64)-max_decal_x, (j*64)-max_decal_y])
 
     def start_game(self) -> int:
         self.ask_player_name()
@@ -79,9 +93,11 @@ class Game:
 
         while self.run:
             self.update()
+            self.draw()            
 
         return 0
 
 
 game = Game()
 game.start_game()
+
