@@ -15,6 +15,8 @@ height = 834
 
 pygame.init()
 pygame.display.set_caption("Nungeon")
+pygame.font.init()
+
 
 screen = pygame.display.set_mode((width, height))
 
@@ -32,13 +34,14 @@ class Game:
         self.background.convert()
 
         self.sprites = [pygame.image.load(os.path.join("sprites/player.png")).convert()]
+        self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
 
     def ask_player_name(self) -> int:
         if self.player is not None:
             print("Un joueur est déjà créé.")
             return 1
 
-        player_name = input("Veuillez renseigner le pseudonyme du joueur : ")
+        player_name = "zub"#input("Veuillez renseigner le pseudonyme du joueur : ")
 
         self.player = Player(player_name, (0, 0), self.sprites[0], screen)
 
@@ -46,6 +49,9 @@ class Game:
 
     def update(self):
         # run updates of all instances (no draw)
+        self.dt = clock.get_time() / (1/60*1000)
+
+        clock.tick(60)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -60,13 +66,7 @@ class Game:
 
         keys = (x_move, y_move)
 
-        # self.player.update(keys)
-
-        dt = clock.tick(144) / 144
-
-        self.player.update(dt, keys)
-
-        pass
+        self.player.update(self.dt, keys)
 
     def draw(self):
         screen.fill((0, 0, 0))
@@ -76,9 +76,16 @@ class Game:
         max_decal_x = floor(self.player.coord[0] % 64)
         max_decal_y = floor(self.player.coord[1] % 64)
 
+        dt_surface= self.my_font.render(str(self.dt), False, (255,255,255))
+        fps_surface= self.my_font.render(str(round(clock.get_fps())), False, (255,255,255))
+        temp=[]
         for i in range(count_per_line):
             for j in range(count_per_column):
-                screen.blit(self.background, [(i * 64) - max_decal_x, (j * 64) - max_decal_y])
+                temp.append((self.background, [(i * 64) - max_decal_x, (j * 64) - max_decal_y]))
+
+        temp.append((fps_surface,(0,0)))
+        temp.append((dt_surface,(0,16)))
+        screen.blits(temp)
 
         self.player.draw()
 

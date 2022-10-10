@@ -6,7 +6,7 @@ class Player:
         self.base_health = 500
         self.health = self.base_health
         self.player_name = name
-        self.base_speed = 25
+        self.base_speed = 5
         self.speed = self.base_speed
         self.sprt = sprt
         self.scrn = screen
