@@ -27,7 +27,7 @@ class Player:
         return self.inv
     
     def add_item_to_inv(self,itm):
-        inv.append(itm)
+        self.inv.append(itm)
     
     def move_player(self, tcor, x_direction, y_direction):
         self.coord[0]+= x_direction*self.speed*tcor
