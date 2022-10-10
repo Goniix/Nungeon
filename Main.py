@@ -42,7 +42,7 @@ class Game:
 
         player_name = input("Veuillez renseigner le pseudonyme du joueur : ")
         
-        self.player = Player(player_name, (0, 0), self.sprites[0])
+        self.player = Player(player_name, (0, 0), self.sprites[0], screen)
 
         return 0
 
@@ -70,7 +70,6 @@ class Game:
         dt = clock.tick(144) / 144
         
         self.player.update(dt, [x_move, y_move])
-        self.player.draw()
         
         pass
 
@@ -85,6 +84,8 @@ class Game:
         for i in range(count_per_line):
             for j in range(count_per_column):
                 screen.blit(self.background, [(i*64)-max_decal_x, (j*64)-max_decal_y])
+                
+        self.player.draw()
 
     def start_game(self) -> int:
         self.ask_player_name()
