@@ -29,14 +29,14 @@ class Game:
         self.colors = Colors()
         self.player = None
         
-        self.fps_cap = 60
+        self.fps_cap = 160
 
         self.run = False
 
-        self.background = pygame.image.load(os.path.join("sprites/background_tile.png"))
-        self.background.convert()
 
-        self.sprites = [pygame.image.load(os.path.join("sprites/player.png")).convert()]
+        self.sprites = {}
+        self.sprites["player"] = pygame.image.load(os.path.join("sprites/player.png")).convert()
+        self.sprites["background"] = pygame.image.load(os.path.join("sprites/background_tile.png")).convert()
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
 
         self.debug=tools.devtools.Debug()
@@ -48,7 +48,7 @@ class Game:
 
         player_name = "zub"#input("Veuillez renseigner le pseudonyme du joueur : ")
 
-        self.player = Player(player_name, (0, 0), self.sprites[0], screen)
+        self.player = Player(player_name, (0, 0), self.sprites["player"], screen)
 
         return 0
 
@@ -74,24 +74,25 @@ class Game:
     def draw(self):
         screen.fill((0, 0, 0))
         
-        count_per_line = floor(width / 64) + 2
-        count_per_column = floor(height / 64) + 2
+        count_per_line = floor(width / 512) + 2
+        count_per_column = floor(height / 512) + 2
 
-        max_decal_x = floor(self.player.coord[0] % 64)
-        max_decal_y = floor(self.player.coord[1] % 64)
+        max_decal_x = floor(self.player.coord[0] % 512)
+        max_decal_y = floor(self.player.coord[1] % 512)
 
         
         temp=[]
         
         for i in range(count_per_line):
             for j in range(count_per_column):
-                temp.append((self.background, [(i * 64) - max_decal_x, (j * 64) - max_decal_y]))
+                temp.append((self.sprites["background"], [(i * 512) - max_decal_x, (j * 512) - max_decal_y]))
                 
-
+        
         temp+=self.debug.draw()
+        temp.append(self.player.draw())
         screen.blits(temp)
 
-        self.player.draw()
+        
 
     def start_game(self) -> int:
         self.ask_player_name()
