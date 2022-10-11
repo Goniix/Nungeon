@@ -49,9 +49,7 @@ class Game:
 
     def update(self):
         # run updates of all instances (no draw)
-        self.dt = clock.get_time() / (1/60*1000)
-
-        clock.tick(60)
+        self.dt = clock.tick(60) / (1/60*1000)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -76,8 +74,8 @@ class Game:
         max_decal_x = floor(self.player.coord[0] % 64)
         max_decal_y = floor(self.player.coord[1] % 64)
 
-        dt_surface= self.my_font.render(str(self.dt), False, (255,255,255))
-        fps_surface= self.my_font.render(str(round(clock.get_fps())), False, (255,255,255))
+        dt_surface= self.my_font.render("dt: "+str(self.dt), False, (255,255,255))
+        fps_surface= self.my_font.render("fps: "+str(clock.get_fps()), False, (255,255,255))
         temp=[]
         for i in range(count_per_line):
             for j in range(count_per_column):
