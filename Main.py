@@ -3,7 +3,8 @@ from instances.Colors import Colors
 from instances.Item import *
 from instances.Monster import *
 from instances.Player import Player
-import tools.devtools
+import tools.devtools as dtools
+import tools.spritetools as stools
 
 import pygame
 import sys
@@ -20,7 +21,6 @@ pygame.font.init()
 
 
 screen = pygame.display.set_mode((width, height))
-
 clock = pygame.time.Clock()
 
 
@@ -30,16 +30,16 @@ class Game:
         self.player = None
         
         self.fps_cap = 160
-
         self.run = False
 
+        self.sprites = stools.SpriteGroup()
+        self.sprites.player = stools.Sprite("sprites/player.png",32,32)
+        self.sprites.background = stools.Sprite("sprites/background_tile.png",512,512)
 
-        self.sprites = {}
-        self.sprites["player"] = pygame.image.load(os.path.join("sprites/player.png")).convert()
-        self.sprites["background"] = pygame.image.load(os.path.join("sprites/background_tile.png")).convert()
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
 
-        self.debug=tools.devtools.Debug()
+        self.debug=dtools.Debug()
+        self.disp_list=[]
 
     def ask_player_name(self) -> int:
         if self.player is not None:
@@ -48,8 +48,7 @@ class Game:
 
         player_name = "zub"#input("Veuillez renseigner le pseudonyme du joueur : ")
 
-        self.player = Player(player_name, (0, 0), self.sprites["player"], screen)
-
+        self.player = Player(player_name, (0, 0), self.sprites.player.images[0], screen)
         return 0
 
     def update(self):
@@ -74,23 +73,22 @@ class Game:
     def draw(self):
         screen.fill((0, 0, 0))
         
-        count_per_line = floor(width / 512) + 2
-        count_per_column = floor(height / 512) + 2
+        count_per_line = floor(width / self.sprites.background.w) + 2
+        count_per_column = floor(height / self.sprites.background.h) + 2
 
-        max_decal_x = floor(self.player.coord[0] % 512)
-        max_decal_y = floor(self.player.coord[1] % 512)
+        max_decal_x = floor(self.player.coord[0] % self.sprites.background.w)
+        max_decal_y = floor(self.player.coord[1] % self.sprites.background.h)
 
-        
-        temp=[]
+        self.disp_list=[]
         
         for i in range(count_per_line):
             for j in range(count_per_column):
-                temp.append((self.sprites["background"], [(i * 512) - max_decal_x, (j * 512) - max_decal_y]))
+                self.disp_list.append((self.sprites.background.images[0], [(i * 512) - max_decal_x, (j * 512) - max_decal_y]))
                 
         
-        temp+=self.debug.draw()
-        temp.append(self.player.draw())
-        screen.blits(temp)
+        self.disp_list+=self.debug.draw()
+        self.disp_list.append(self.player.draw())
+        screen.blits(self.disp_list)
 
         
 
@@ -99,6 +97,7 @@ class Game:
 
         self.debug.add_watcher("fps",lambda : clock.get_fps())
         self.debug.add_watcher("dt",lambda : game.dt)
+        self.debug.add_watcher("blit_t",lambda : len(game.disp_list))
 
         self.run = True
 
