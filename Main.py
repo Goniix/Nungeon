@@ -3,6 +3,7 @@ from instances.Colors import Colors
 from instances.Item import *
 from instances.Monster import *
 from instances.Player import Player
+import tools.devtools
 
 import pygame
 import sys
@@ -27,6 +28,8 @@ class Game:
     def __init__(self):
         self.colors = Colors()
         self.player = None
+        
+        self.fps_cap = 60
 
         self.run = False
 
@@ -35,6 +38,8 @@ class Game:
 
         self.sprites = [pygame.image.load(os.path.join("sprites/player.png")).convert()]
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
+
+        self.debug=tools.devtools.Debug()
 
     def ask_player_name(self) -> int:
         if self.player is not None:
@@ -49,7 +54,7 @@ class Game:
 
     def update(self):
         # run updates of all instances (no draw)
-        self.dt = clock.tick(60) / (1/60*1000)
+        self.dt = clock.tick(self.fps_cap) / (1/60*1000)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -68,27 +73,31 @@ class Game:
 
     def draw(self):
         screen.fill((0, 0, 0))
+        
         count_per_line = floor(width / 64) + 2
         count_per_column = floor(height / 64) + 2
 
         max_decal_x = floor(self.player.coord[0] % 64)
         max_decal_y = floor(self.player.coord[1] % 64)
 
-        dt_surface= self.my_font.render("dt: "+str(self.dt), False, (255,255,255))
-        fps_surface= self.my_font.render("fps: "+str(clock.get_fps()), False, (255,255,255))
+        
         temp=[]
+        
         for i in range(count_per_line):
             for j in range(count_per_column):
                 temp.append((self.background, [(i * 64) - max_decal_x, (j * 64) - max_decal_y]))
+                
 
-        temp.append((fps_surface,(0,0)))
-        temp.append((dt_surface,(0,16)))
+        temp+=self.debug.draw()
         screen.blits(temp)
 
         self.player.draw()
 
     def start_game(self) -> int:
         self.ask_player_name()
+
+        self.debug.add_watcher("fps",lambda : clock.get_fps())
+        self.debug.add_watcher("dt",lambda : game.dt)
 
         self.run = True
 
