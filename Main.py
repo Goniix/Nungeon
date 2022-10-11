@@ -35,9 +35,9 @@ class Game:
         self.run = False
 
 
-        self.sprites = {}
-        self.sprites["player"] = stools.Sprite(pygame.image.load(os.path.join("sprites/player.png")).convert(),32,32)
-        self.sprites["background"] = stools.Sprite(pygame.image.load(os.path.join("sprites/background_tile.png")).convert(),512,512)
+        self.sprites = stools.SpriteGroup()
+        self.sprites.player = stools.Sprite(pygame.image.load(os.path.join("sprites/player.png")).convert(),32,32)
+        self.sprites.background = stools.Sprite(pygame.image.load(os.path.join("sprites/background_tile.png")).convert(),512,512)
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
 
         self.debug=dtools.Debug()
@@ -49,7 +49,7 @@ class Game:
 
         player_name = "zub"#input("Veuillez renseigner le pseudonyme du joueur : ")
 
-        self.player = Player(player_name, (0, 0), self.sprites["player"].images[0], screen)
+        self.player = Player(player_name, (0, 0), self.sprites.player.images[0], screen)
         return 0
 
     def update(self):
@@ -74,18 +74,18 @@ class Game:
     def draw(self):
         screen.fill((0, 0, 0))
         
-        count_per_line = floor(width / self.sprites["background"].w) + 2
-        count_per_column = floor(height / self.sprites["background"].h) + 2
+        count_per_line = floor(width / self.sprites.background.w) + 2
+        count_per_column = floor(height / self.sprites.background.h) + 2
 
-        max_decal_x = floor(self.player.coord[0] % self.sprites["background"].w)
-        max_decal_y = floor(self.player.coord[1] % self.sprites["background"].h)
+        max_decal_x = floor(self.player.coord[0] % self.sprites.background.w)
+        max_decal_y = floor(self.player.coord[1] % self.sprites.background.h)
 
         
         temp=[]
         
         for i in range(count_per_line):
             for j in range(count_per_column):
-                temp.append((self.sprites["background"].images[0], [(i * 512) - max_decal_x, (j * 512) - max_decal_y]))
+                temp.append((self.sprites.background.images[0], [(i * 512) - max_decal_x, (j * 512) - max_decal_y]))
                 
         
         temp+=self.debug.draw()

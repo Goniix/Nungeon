@@ -14,3 +14,10 @@ class Sprite():
         
         self.w=w
         self.h=h
+
+class SpriteGroup():
+    """
+    class for storing groups of sprites
+    """
+    def __init__(self):
+        pass
