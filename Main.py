@@ -41,6 +41,7 @@ class Game:
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
 
         self.debug=dtools.Debug()
+        self.disp_list=[]
 
     def ask_player_name(self) -> int:
         if self.player is not None:
@@ -81,16 +82,16 @@ class Game:
         max_decal_y = floor(self.player.coord[1] % self.sprites.background.h)
 
         
-        temp=[]
+        self.disp_list=[]
         
         for i in range(count_per_line):
             for j in range(count_per_column):
-                temp.append((self.sprites.background.images[0], [(i * 512) - max_decal_x, (j * 512) - max_decal_y]))
+                self.disp_list.append((self.sprites.background.images[0], [(i * 512) - max_decal_x, (j * 512) - max_decal_y]))
                 
         
-        temp+=self.debug.draw()
-        temp.append(self.player.draw())
-        screen.blits(temp)
+        self.disp_list+=self.debug.draw()
+        self.disp_list.append(self.player.draw())
+        screen.blits(self.disp_list)
 
         
 
@@ -99,6 +100,7 @@ class Game:
 
         self.debug.add_watcher("fps",lambda : clock.get_fps())
         self.debug.add_watcher("dt",lambda : game.dt)
+        self.debug.add_watcher("blit_t",lambda : len(game.disp_list))
 
         self.run = True
 
