@@ -34,7 +34,7 @@ class Player:
         self.coord[1]+= y_direction*self.speed*tcor
     
     def draw(self):
-        self.scrn.blit(self.sprt,[1194/2,834/2])
+        return (self.sprt,[1194/2,834/2])
     
     def update(self, dt, keyinput):
         self.set_x(self.get_x()+(keyinput[0]*self.speed*dt))
