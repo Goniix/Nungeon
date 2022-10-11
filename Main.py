@@ -21,7 +21,6 @@ pygame.font.init()
 
 
 screen = pygame.display.set_mode((width, height))
-
 clock = pygame.time.Clock()
 
 
@@ -31,13 +30,12 @@ class Game:
         self.player = None
         
         self.fps_cap = 160
-
         self.run = False
 
-
         self.sprites = stools.SpriteGroup()
-        self.sprites.player = stools.Sprite(pygame.image.load(os.path.join("sprites/player.png")).convert_alpha())
-        self.sprites.background = stools.Sprite(pygame.image.load(os.path.join("sprites/background_tile.png")).convert_alpha())
+        self.sprites.player = stools.Sprite("sprites/player.png",32,32)
+        self.sprites.background = stools.Sprite("sprites/background_tile.png",512,512)
+
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
 
         self.debug=dtools.Debug()
@@ -81,7 +79,6 @@ class Game:
         max_decal_x = floor(self.player.coord[0] % self.sprites.background.w)
         max_decal_y = floor(self.player.coord[1] % self.sprites.background.h)
 
-        
         self.disp_list=[]
         
         for i in range(count_per_line):
