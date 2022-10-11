@@ -36,8 +36,8 @@ class Game:
 
 
         self.sprites = stools.SpriteGroup()
-        self.sprites.player = stools.Sprite(pygame.image.load(os.path.join("sprites/player.png")).convert(),32,32)
-        self.sprites.background = stools.Sprite(pygame.image.load(os.path.join("sprites/background_tile.png")).convert(),512,512)
+        self.sprites.player = stools.Sprite(pygame.image.load(os.path.join("sprites/player.png")).convert_alpha())
+        self.sprites.background = stools.Sprite(pygame.image.load(os.path.join("sprites/background_tile.png")).convert_alpha())
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
 
         self.debug=dtools.Debug()

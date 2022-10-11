@@ -1,3 +1,4 @@
+import pygame
 class Sprite():
     """
     creates sprite container from its info
@@ -5,15 +6,15 @@ class Sprite():
     w -> int widt of the sprite (all must be same size)
     h -> int height of the sprite (all must be same size)
     """
-    def __init__(self,images,w,h):
+    def __init__(self,images):
 
         if type(images) != list:
             self.images=[images]
         else:
             self.images=images
         
-        self.w=w
-        self.h=h
+        self.w=self.images[0].get_width()
+        self.h=self.images[0].get_height()
 
 class SpriteGroup():
     """
