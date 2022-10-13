@@ -1,10 +1,9 @@
-from instances.Item import Item
 from instances.Colors import Colors
 from instances.Item import *
 from instances.Monster import *
 from instances.Player import Player
-import tools.devtools as dtools
-import tools.spritetools as stools
+from tools.devtools import *
+from tools.spritetools import *
 
 import pygame
 import sys
@@ -31,14 +30,17 @@ class Game:
         
         self.fps_cap = 160
         self.run = False
+        self.frame_count = 0
+        self.dt_frame = 0
 
-        self.sprites = stools.SpriteGroup()
-        self.sprites.player = stools.Sprite("sprites/player.png",32,32)
-        self.sprites.background = stools.Sprite("sprites/background_tile.png",512,512)
+        self.sprites = SpriteGroup()
+        self.sprites.player = Sprite("sprites/player_sepia.png",32,32)
+        self.sprites.background = Sprite("sprites/background.png",1280,704)
+        self.sprites.light = Sprite("sprites/light.png",64,64,75,image_speed=6)
 
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
 
-        self.debug=dtools.Debug()
+        self.debug=Debug()
         self.disp_list=[]
 
     def ask_player_name(self) -> int:
@@ -48,7 +50,7 @@ class Game:
 
         player_name = "zub"#input("Veuillez renseigner le pseudonyme du joueur : ")
 
-        self.player = Player(player_name, (0, 0), self.sprites.player.images[0], screen)
+        self.player = Player(player_name, (0, 0), self.sprites.player, screen)
         return 0
 
     def update(self):
@@ -83,11 +85,13 @@ class Game:
         
         for i in range(count_per_line):
             for j in range(count_per_column):
-                self.disp_list.append((self.sprites.background.images[0], [(i * 512) - max_decal_x, (j * 512) - max_decal_y]))
+                self.disp_list.append((self.sprites.background.images[0], [(i * self.sprites.background.w) - max_decal_x, (j * self.sprites.background.h) - max_decal_y]))
                 
-        
-        self.disp_list+=self.debug.draw()
+
+        self.disp_list.append(self.sprites.light.get_blitable(1194/2,834/2,self.dt_frame))
         self.disp_list.append(self.player.draw())
+
+        self.disp_list+=self.debug.draw()
         screen.blits(self.disp_list)
 
         
@@ -104,6 +108,8 @@ class Game:
         while self.run:
             self.update()
             self.draw()
+            self.frame_count +=1
+            self.dt_frame += self.dt
 
         return 0
 
