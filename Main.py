@@ -11,15 +11,15 @@ import os
 
 from math import floor
 
-width = 1194
-height = 834
+width = 1280
+height = 720
 
 pygame.init()
 pygame.display.set_caption("Nungeon")
 pygame.font.init()
 
 
-screen = pygame.display.set_mode((width, height))
+screen = pygame.display.set_mode((width, height),vsync=1,flags=pygame.SCALED|pygame.NOFRAME)
 clock = pygame.time.Clock()
 
 
@@ -35,7 +35,7 @@ class Game:
 
         self.sprites = SpriteGroup()
         self.sprites.player = Sprite("sprites/player_sepia.png",32,32)
-        self.sprites.background = Sprite("sprites/background.png",1280,704)
+        self.sprites.background = Sprite("sprites/background_tile.png",512,512)
         self.sprites.light = Sprite("sprites/light.png",64,64,75,image_speed=6)
 
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
@@ -65,6 +65,9 @@ class Game:
         key = pygame.key.get_pressed()
         y_move = key[pygame.K_s] - key[pygame.K_z]
         x_move = key[pygame.K_d] - key[pygame.K_q]
+        if key[pygame.K_ESCAPE]:
+            pygame.quit()
+            sys.exit(0)
 
         pygame.display.flip()
 
@@ -88,7 +91,7 @@ class Game:
                 self.disp_list.append((self.sprites.background.images[0], [(i * self.sprites.background.w) - max_decal_x, (j * self.sprites.background.h) - max_decal_y]))
                 
 
-        self.disp_list.append(self.sprites.light.get_blitable(1194/2,834/2,self.dt_frame))
+        self.disp_list.append(self.sprites.light.get_blitable(width/2,height/2,self.dt_frame))
         self.disp_list.append(self.player.draw())
 
         self.disp_list+=self.debug.draw()
