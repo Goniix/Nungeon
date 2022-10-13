@@ -6,10 +6,11 @@ class Player:
         self.base_health = 500
         self.health = self.base_health
         self.player_name = name
-        self.base_speed = 5
+        self.base_speed = 3
         self.speed = self.base_speed
         self.sprt = sprt
         self.scrn = screen
+        self.screenInfo=pygame.display.Info()
         
     def get_x(self):
         return self.coord[0]
@@ -34,7 +35,7 @@ class Player:
         self.coord[1]+= y_direction*self.speed*tcor
     
     def draw(self):
-        return (self.sprt,[1194/2,834/2])
+        return (self.sprt.images[0],[(self.screenInfo.current_w/2)-(self.sprt.w/2),(self.screenInfo.current_h/2)-(self.sprt.h/2)])
     
     def update(self, dt, keyinput):
         self.set_x(self.get_x()+(keyinput[0]*self.speed*dt))
