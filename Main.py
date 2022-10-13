@@ -28,14 +28,14 @@ class Game:
         self.colors = Colors()
         self.player = None
         
-        self.fps_cap = 160
+        self.fps_cap = 300
         self.run = False
         self.frame_count = 0
         self.dt_frame = 0
 
         self.sprites = SpriteGroup()
         self.sprites.player = Sprite("sprites/player_sepia.png",32,32)
-        self.sprites.background = Sprite("sprites/background_tile.png",512,512)
+        self.sprites.background = Sprite("sprites/background.png",1280,702)
         self.sprites.light = Sprite("sprites/light.png",64,64,75,image_speed=6)
 
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
