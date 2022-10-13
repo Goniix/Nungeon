@@ -1,2 +1,2 @@
 # Nungeon
-Shell dungeon crawler in Python
+A game heavily inspired by Vampire Survivor, supposed to be created in NSI class
