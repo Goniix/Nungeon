@@ -8,6 +8,7 @@ from tools.spritetools import *
 import pygame
 import sys
 import os
+import time
 
 from math import floor
 
@@ -18,8 +19,13 @@ pygame.init()
 pygame.display.set_caption("Nungeon")
 pygame.font.init()
 
+try:
+    screen = pygame.display.set_mode((width, height),vsync=1,flags=pygame.SCALED|pygame.NOFRAME)
+except Exception as e:
+    print(e)
+finally:
+    screen = pygame.display.set_mode((width, height))
 
-screen = pygame.display.set_mode((width, height),vsync=1,flags=pygame.SCALED|pygame.NOFRAME)
 clock = pygame.time.Clock()
 
 
@@ -28,7 +34,7 @@ class Game:
         self.colors = Colors()
         self.player = None
         
-        self.fps_cap = 300
+        self.fps_cap = 400
         self.run = False
         self.frame_count = 0
         self.dt_frame = 0
@@ -37,9 +43,12 @@ class Game:
         self.sprites.player = Sprite("sprites/player_sepia.png",32,32)
         self.sprites.background = Sprite("sprites/background.png",1280,702)
         self.sprites.light = Sprite("sprites/light.png",64,64,75,image_speed=6)
+        
+        self.sprites.background.count_per_line = floor(width / self.sprites.background.w) + 2
+        self.sprites.background.count_per_column = floor(height / self.sprites.background.h) + 2
 
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
-
+        
         self.debug=Debug()
         self.disp_list=[]
 
@@ -76,18 +85,14 @@ class Game:
         self.player.update(self.dt, keys)
 
     def draw(self):
-        screen.fill((0, 0, 0))
         
-        count_per_line = floor(width / self.sprites.background.w) + 2
-        count_per_column = floor(height / self.sprites.background.h) + 2
-
-        max_decal_x = floor(self.player.coord[0] % self.sprites.background.w)
-        max_decal_y = floor(self.player.coord[1] % self.sprites.background.h)
+        max_decal_x = self.player.coord[0] % self.sprites.background.w
+        max_decal_y = self.player.coord[1] % self.sprites.background.h
 
         self.disp_list=[]
         
-        for i in range(count_per_line):
-            for j in range(count_per_column):
+        for i in range(self.sprites.background.count_per_line):
+            for j in range(self.sprites.background.count_per_column):
                 self.disp_list.append((self.sprites.background.images[0], [(i * self.sprites.background.w) - max_decal_x, (j * self.sprites.background.h) - max_decal_y]))
                 
 
@@ -95,13 +100,14 @@ class Game:
         self.disp_list.append(self.player.draw())
 
         self.disp_list+=self.debug.draw()
+        screen.fill((0, 0, 0))
         screen.blits(self.disp_list)
 
         
 
     def start_game(self) -> int:
         self.ask_player_name()
-
+    
         self.debug.add_watcher("fps",lambda : clock.get_fps())
         self.debug.add_watcher("dt",lambda : game.dt)
         self.debug.add_watcher("blit_t",lambda : len(game.disp_list))
