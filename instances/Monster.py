@@ -1,4 +1,17 @@
 from math import *
+
+class trigon():
+    def __init__(self,coords):
+        self.coord=coords
+        self.direction=0
+        self.rotation_speed=1
+        self.speed=1
+    
+    def step(self):
+        if True:
+            pass
+
+"""
 class Monster:
     def __init__(self, x, y, monster_base):
         self.coord = [x, y]
@@ -26,7 +39,7 @@ class MonsterTemplate:
         self.speed = self.base_speed
 
     def step_method(self,player_x,player_y,tcor):
-        """method executed each turn by the monster"""
+        #method executed each turn by the monster
         dist=sqrt(((player_x-self.coord[0])**2)-((player_y-self.coord[1])**2))
         x_vec=(player_x-self.coord[0])/dist
         y_vec=(player_y-self.coord[1])/dist
@@ -38,3 +51,8 @@ class MonsterTemplate:
     
     def hit_method(self):
         pass
+"""
+class Monster():
+    def __init__(self,coords,type):
+        self.coord=coords
+        
