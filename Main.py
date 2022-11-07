@@ -41,7 +41,7 @@ class Game:
 
         self.sprites = SpriteGroup()
         self.sprites.player = Sprite("sprites/player_sepia.png",32,32)
-        self.sprites.background = Sprite("sprites/background.png",1280,702)
+        self.sprites.background = Sprite("sprites/background.png",1281,767)
         self.sprites.light = Sprite("sprites/light.png",64,64,75,image_speed=6)
         
         self.sprites.background.count_per_line = floor(width / self.sprites.background.w) + 2
