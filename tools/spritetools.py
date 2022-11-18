@@ -3,6 +3,13 @@ import os
 from math import floor
 
 def create_strip(filename, w, h,alpha):
+    """
+    returns a list of sprite from a sprite sheet
+    filename-> path to image
+    w-> width of each invidual sprite (has to be the same from each sprite or there maybe be cropping)
+    h-> height of each invidual sprite (has to be the same from each sprite or there maybe be cropping)
+    alpha-> alpha of strip (same for each frame)
+    """
     sheet= pygame.image.load(os.path.join(filename))
     strip=[]
     for i in range(sheet.get_width()//w):
@@ -21,6 +28,8 @@ class Sprite():
     images -> list with all imported frames (even if only one frame)
     w -> int widt of the sprite (all must be same size)
     h -> int height of the sprite (all must be same size)
+    alpha -> alpha of strip (same for each frame)
+    image_speed -> speed of the animation (bigger->slower)
     """
     def __init__(self,filename,w,h,alpha=255,image_speed=2):
         self.images=create_strip(filename,w,h,alpha)
