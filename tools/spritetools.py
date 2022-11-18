@@ -19,7 +19,7 @@ def create_strip(filename, image_w, image_h,alpha):
             rect_surf.set_alpha(alpha)
             rect_surf.blit(sheet,(0,0),(i*image_w,j*image_h,image_w,image_h))
             strip.append(rect_surf)
-    return strip   
+    return strip
 
 class Sprite():
     """
