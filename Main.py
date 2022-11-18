@@ -44,8 +44,8 @@ class Game:
         self.sprites.background = Sprite("sprites/background.png",1280,702)
         self.sprites.light = Sprite("sprites/light.png",64,64,75,image_speed=6)
         
-        self.sprites.background.count_per_line = floor(width / self.sprites.background.w) + 2
-        self.sprites.background.count_per_column = floor(height / self.sprites.background.h) + 2
+        self.sprites.background.count_per_line = floor(width / self.sprites.background.image_w) + 2
+        self.sprites.background.count_per_column = floor(height / self.sprites.background.image_h) + 2
 
         self.my_font = pygame.font.SysFont('Comic Sans MS', 10)
         
@@ -86,14 +86,14 @@ class Game:
 
     def draw(self):
         
-        max_decal_x = self.player.coord[0] % self.sprites.background.w
-        max_decal_y = self.player.coord[1] % self.sprites.background.h
+        max_decal_x = self.player.coord[0] % self.sprites.background.image_w
+        max_decal_y = self.player.coord[1] % self.sprites.background.image_h
 
         self.disp_list=[]
         
         for i in range(self.sprites.background.count_per_line):
             for j in range(self.sprites.background.count_per_column):
-                self.disp_list.append((self.sprites.background.images[0], [(i * self.sprites.background.w) - max_decal_x, (j * self.sprites.background.h) - max_decal_y]))
+                self.disp_list.append((self.sprites.background.images[0], [(i * self.sprites.background.image_w) - max_decal_x, (j * self.sprites.background.image_h) - max_decal_y]))
                 
 
         self.disp_list.append(self.sprites.light.get_blitable(width/2,height/2,self.dt_frame))
